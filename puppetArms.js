@@ -1,10 +1,10 @@
-import puppeteer from "puppeteer";
-import path from "path";
-import fs from "fs";
-import renameDownloadedFile from "./utils/dwnloadRename";
-import updatePdfLink from "./utils/db/update";
-import resizePDF from "./utils/resizePdf";
-import waitForDownload from "./utils/waitForDownload";
+const puppeteer = require("puppeteer");
+const path = require("path");
+const fs = require("fs");
+const renameDownloadedFile = require("./utils/dwnloadRename");
+const updatePdfLink = require("./utils/db/update");
+const resizePDF = require("./utils/resizePdf");
+const waitForDownload = require("./utils/waitForDownload");
 
 const downloadPath = path.resolve("/tmp", "downloads");
 const localSavePath = path.resolve("/tmp", "saved_files");
@@ -100,5 +100,5 @@ async function findDownloadedFile(downloadPath) {
   }
   return path.join(downloadPath, downloadedFile);
 }
+
 module.exports = puppetArms;
-//trial
