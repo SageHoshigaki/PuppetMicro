@@ -1,5 +1,5 @@
 const express = require("express");
-const puppetArms = require("./puppetarms");
+const puppetArms = require("./puppetArms");
 
 const app = express();
 
