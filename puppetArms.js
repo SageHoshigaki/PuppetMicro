@@ -4,13 +4,11 @@ const fs = require("fs");
 const waitForDownload = require("./waitForDownload");
 
 const downloadPath = path.resolve("/tmp", "downloads");
-const localSavePath = path.resolve("/tmp", "saved_files");
 
 async function puppetArms(url, entryId) {
   let browser;
   try {
     ensureDirectoryExists(downloadPath);
-    ensureDirectoryExists(localSavePath);
 
     console.log("Initializing Puppeteer browser...");
     browser = await puppeteer.launch({
@@ -56,19 +54,10 @@ async function puppetArms(url, entryId) {
     console.log("Download finished.");
 
     const filePath = await findDownloadedFile(downloadPath);
-    const finalFilePath = path.join(
-      localSavePath,
-      path.basename(resizedFilePath)
-    );
 
-    fs.copyFileSync(resizedFilePath, finalFilePath);
-
-    await updatePdfLink(entryId, finalFilePath); // Update DB with the local file path
-    console.log(
-      "Document saved locally and updated in the database:",
-      finalFilePath
-    );
-    return finalFilePath;
+    const fileBuffer = fs.readFileSync(filePath);
+    console.log("Document downloaded:", filePath);
+    return fileBuffer;
   } catch (error) {
     console.error("Error in puppetArms function:", error);
     throw error;
