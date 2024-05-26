@@ -1,10 +1,7 @@
 const puppeteer = require("puppeteer");
 const path = require("path");
 const fs = require("fs");
-const renameDownloadedFile = require("./utils/dwnloadRename");
-const updatePdfLink = require("./utils/db/update");
-const resizePDF = require("./utils/resizePdf");
-const waitForDownload = require("./utils/waitForDownload");
+const waitForDownload = require("./waitForDownload");
 
 const downloadPath = path.resolve("/tmp", "downloads");
 const localSavePath = path.resolve("/tmp", "saved_files");
@@ -59,8 +56,6 @@ async function puppetArms(url, entryId) {
     console.log("Download finished.");
 
     const filePath = await findDownloadedFile(downloadPath);
-    const newFilePath = await renameDownloadedFile(filePath, entryId);
-    const resizedFilePath = await resizePDF(newFilePath);
     const finalFilePath = path.join(
       localSavePath,
       path.basename(resizedFilePath)
