@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 const path = require("path");
 const fs = require("fs");
-const waitForDownload = require("./waitForDownload");
+const waitForDownload = require("./waitfordownload");
 
 const downloadPath = path.resolve("/tmp", "downloads");
 
