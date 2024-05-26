@@ -100,6 +100,5 @@ async function findDownloadedFile(downloadPath) {
   }
   return path.join(downloadPath, downloadedFile);
 }
-
-export default puppetArms;
+module.exports = puppetArms;
 //trial
