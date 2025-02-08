@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const waitForDownload = require("./waitfordownload");
 
+// Define the download directory inside the Docker container
 const downloadPath = path.resolve("/tmp", "downloads");
 
 async function puppetArms(url, entryId) {
@@ -21,20 +22,23 @@ async function puppetArms(url, entryId) {
         "--disable-gpu",
       ],
     });
+
     console.log("Puppeteer browser initialized successfully.");
 
     const page = await browser.newPage();
 
+    // Enable download behavior in Puppeteer inside the Docker container
     const client = await page.target().createCDPSession();
     await client.send("Page.setDownloadBehavior", {
       behavior: "allow",
-      downloadPath: downloadPath,
+      downloadPath: downloadPath, // Ensuring downloads go to the correct directory
     });
 
     console.log("Opening the page...");
     await page.goto(url, { waitUntil: "networkidle0" });
     console.log("Page opened.");
 
+    // Click to open dropdown
     const dropdownTriggerSelector =
       'span.n-button__content > svg[aria-hidden="true"]';
     const downbtnSelector = ".v-binder-follower-content";
@@ -54,6 +58,9 @@ async function puppetArms(url, entryId) {
     console.log("Download finished.");
 
     const filePath = await findDownloadedFile(downloadPath);
+
+    // Log file path for debugging
+    console.log(`Downloaded PDF Path: ${filePath}`);
 
     const fileBuffer = fs.readFileSync(filePath);
     console.log("Document downloaded:", filePath);

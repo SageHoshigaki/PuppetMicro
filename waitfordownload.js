@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+const path = require("path");
+const fs = require("fs");
 
 async function waitForDownload(downloadPath, timeout = 400000) {
   return new Promise((resolve, reject) => {
@@ -23,4 +23,4 @@ async function waitForDownload(downloadPath, timeout = 400000) {
   });
 }
 
-export default waitForDownload;
+module.exports = waitForDownload;
